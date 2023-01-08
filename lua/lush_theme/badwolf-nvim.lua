@@ -45,6 +45,42 @@
 local lush = require('lush')
 local hsl = lush.hsl
 
+local palette = {
+  -- plain
+  plain = "#f8f6f2",
+
+  -- gravel colors
+  gravel = {
+    bright = "#d9cec3",
+    light = "#998f84",
+    standard = "#857f78",
+    medium = "#666462",
+    deep = "#45413b",
+    deeper = "#35322d",
+    dark = "#242321",
+    black = "#1c1b1a",
+    blackest = "#141413",
+  },
+
+
+  -- values
+  snow = "#ffffff",
+  coal = "#000000",
+
+  -- colors
+  dales_pale = "#fade3e",
+  dirty_blonde = "#f4cf86",
+  taffy = "#ff2c4b",
+  saltwatertaffy = "#8cffba",
+  tardis = "#0a9dff",
+  orange = "#ffa724",
+  lime = "#aeee00",
+  dress = "#ff9eb8",
+  toffee = "#b88853",
+  coffee = "#c7915b",
+  darkroast = "#88633f",
+}
+
 -- LSP/Linters mistakenly show `undefined global` errors in the spec, they may
 -- support an annotation like the following. Consult your server documentation.
 ---@diagnostic disable: undefined-global
@@ -61,60 +97,60 @@ local theme = lush(function(injected_functions)
     --
     -- See :h highlight-groups
     --
-    -- ColorColumn  { }, -- Columns set with 'colorcolumn'
+    ColorColumn  { bg = palette.gravel.dark }, -- Columns set with 'colorcolumn'
     -- Conceal      { }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
-    -- Cursor       { }, -- Character under the cursor
-    -- lCursor      { }, -- Character under the cursor when |language-mapping| is used (see 'guicursor')
-    -- CursorIM     { }, -- Like Cursor, but used when in IME mode |CursorIM|
-    -- CursorColumn { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
-    -- CursorLine   { }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-    -- Directory    { }, -- Directory names (and other special names in listings)
-    -- DiffAdd      { }, -- Diff mode: Added line |diff.txt|
-    -- DiffChange   { }, -- Diff mode: Changed line |diff.txt|
-    -- DiffDelete   { }, -- Diff mode: Deleted line |diff.txt|
-    -- DiffText     { }, -- Diff mode: Changed text within a changed line |diff.txt|
+    Cursor       { fg = palette.coal, bg = palette.tardis, gui = "bold" }, -- Character under the cursor
+    lCursor      { fg = palette.coal, bg = palette.tardis, gui = "bold" }, -- Character under the cursor when |language-mapping| is used (see 'guicursor')
+    CursorIM     { fg = palette.coal, bg = palette.tardis, gui = "bold" }, -- Like Cursor, but used when in IME mode |CursorIM|
+    CursorColumn { bg = palette.gravel.dark }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
+    CursorLine   { bg = palette.gravel.dark }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
+    Directory    { fg = palette.dirty_blonde, gui = "bold" }, -- Directory names (and other special names in listings)
+    DiffAdd      { bg = palette.gravel.deeper }, -- Diff mode: Added line |diff.txt|
+    DiffChange   { bg = palette.gravel.dark }, -- Diff mode: Changed line |diff.txt|
+    DiffDelete   { fg = palette.coal, bg = palette.coal }, -- Diff mode: Deleted line |diff.txt|
+    DiffText     { fg = palette.snow, bg = palette.gravel.deeper, gui = "bold"}, -- Diff mode: Changed text within a changed line |diff.txt|
     -- EndOfBuffer  { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
     -- TermCursor   { }, -- Cursor in a focused terminal
     -- TermCursorNC { }, -- Cursor in an unfocused terminal
-    -- ErrorMsg     { }, -- Error messages on the command line
-    -- VertSplit    { }, -- Column separating vertically split windows
-    -- Folded       { }, -- Line used for closed folds
-    -- FoldColumn   { }, -- 'foldcolumn'
-    -- SignColumn   { }, -- Column where |signs| are displayed
+    ErrorMsg     { fg = palette.taffy, gui = "bold" }, -- Error messages on the command line
+    VertSplit    { fg = palette.gravel.light }, -- Column separating vertically split windows
+    Folded       { fg = palette.gravel.medium }, -- Line used for closed folds
+    FoldColumn   { fg = palette.gravel.medium}, -- 'foldcolumn'
+    SignColumn   { }, -- Column where |signs| are displayed
     -- IncSearch    { }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
     -- Substitute   { }, -- |:substitute| replacement text highlighting
-    -- LineNr       { }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+    LineNr       { fg = palette.gravel.medium }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
     -- CursorLineNr { }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
-    -- MatchParen   { }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-    -- ModeMsg      { }, -- 'showmode' message (e.g., "-- INSERT -- ")
+    MatchParen   { fg = palette.dales_pale, bg = palette.gravel.dark, gui = "bold" }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+    ModeMsg      { fg = palette.dirty_blonde, gui = "bold"}, -- 'showmode' message (e.g., "-- INSERT -- ")
     -- MsgArea      { }, -- Area for messages and cmdline
     -- MsgSeparator { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
-    -- MoreMsg      { }, -- |more-prompt|
-    -- NonText      { }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-    -- Normal       { }, -- Normal text
+    MoreMsg      { fg = palette.dales_pale, gui = "bold"}, -- |more-prompt|
+    NonText      { fg = palette.gravel.deep, }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+    Normal       { fg = palette.plain, bg = palette.gravel.black }, -- Normal text
     -- NormalFloat  { }, -- Normal text in floating windows.
     -- NormalNC     { }, -- normal text in non-current windows
-    -- Pmenu        { }, -- Popup menu: Normal item.
-    -- PmenuSel     { }, -- Popup menu: Selected item.
-    -- PmenuSbar    { }, -- Popup menu: Scrollbar.
-    -- PmenuThumb   { }, -- Popup menu: Thumb of the scrollbar.
-    -- Question     { }, -- |hit-enter| prompt and yes/no questions
+    Pmenu        { fg = palette.plain, bg = palette.gravel.deeper}, -- Popup menu: Normal item.
+    PmenuSel     { fg = palette.coal, bg = palette.tardis, gui = "bold"}, -- Popup menu: Selected item.
+    PmenuSbar    { bg = palette.gravel.deeper }, -- Popup menu: Scrollbar.
+    PmenuThumb   { bg = palette.gravel.bright }, -- Popup menu: Thumb of the scrollbar.
+    Question     { fg = palette.dirty_blonde, gui = "bold"}, -- |hit-enter| prompt and yes/no questions
     -- QuickFixLine { }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
-    -- Search       { }, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
-    -- SpecialKey   { }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
-    -- SpellBad     { }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
+    Search       { fg = palette.coal, bg = palette.dales_pale, gui = "bold"}, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
+    SpecialKey   { fg = palette.gravel.deep }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
+    -- SpellBad     { fg = palette.dales_pale, gui = "bold"}, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
     -- SpellCap     { }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
     -- SpellLocal   { }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
     -- SpellRare    { }, -- Word that is recognized by the spellchecker as one that is hardly ever used. |spell| Combined with the highlighting used otherwise.
-    -- StatusLine   { }, -- Status line of current window
-    -- StatusLineNC { }, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-    -- TabLine      { }, -- Tab pages line, not active tab page label
-    -- TabLineFill  { }, -- Tab pages line, where there are no labels
-    -- TabLineSel   { }, -- Tab pages line, active tab page label
-    -- Title        { }, -- Titles for output from ":set all", ":autocmd" etc.
-    -- Visual       { }, -- Visual mode selection
-    -- VisualNOS    { }, -- Visual mode selection when vim is "Not Owning the Selection".
-    -- WarningMsg   { }, -- Warning messages
+    StatusLine   { fg = palette.coal, bg = palette.tardis, gui = "bold"}, -- Status line of current window
+    StatusLineNC { fg = palette.snow, bg = palette.gravel.deep, gui = "bold"}, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
+    TabLine      { fg = palette.plain }, -- Tab pages line, not active tab page label
+    TabLineFill  { fg = palette.plain }, -- Tab pages line, where there are no labels
+    TabLineSel   { fg = palette.coal, bg = palette.tardis }, -- Tab pages line, active tab page label
+    Title        { fg = palette.lime }, -- Titles for output from ":set all", ":autocmd" etc.
+    Visual       { bg = palette.gravel.deep }, -- Visual mode selection
+    VisualNOS    { bg = palette.gravel.deep }, -- Visual mode selection when vim is "Not Owning the Selection".
+    WarningMsg   { fg = palette.dress}, -- Warning messages
     -- Whitespace   { }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
     -- Winseparator { }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
     -- WildMenu     { }, -- Current match in 'wildmenu' completion
@@ -127,48 +163,48 @@ local theme = lush(function(injected_functions)
     --
     -- Uncomment and edit if you want more specific syntax highlighting.
 
-    -- Comment        { }, -- Any comment
+    Comment        { fg = palette.gravel.standard }, -- Any comment
 
-    -- Constant       { }, -- (*) Any constant
-    -- String         { }, --   A string constant: "this is a string"
-    -- Character      { }, --   A character constant: 'c', '\n'
-    -- Number         { }, --   A number constant: 234, 0xff
-    -- Boolean        { }, --   A boolean constant: TRUE, false
-    -- Float          { }, --   A floating point constant: 2.3e10
+    Constant       { fg = palette.toffee, gui = "bold" }, -- (*) Any constant
+    String         { fg = palette.dirty_blonde }, --   A string constant: "this is a string"
+    Character      { fg = palette.toffee, gui = "bold" }, --   A character constant: 'c', '\n'
+    Number         { fg = palette.toffee, gui = "bold" }, --   A number constant: 234, 0xff
+    Boolean        { fg = palette.toffee, gui = "bold" }, --   A boolean constant: TRUE, false
+    Float          { fg = palette.toffee, gui = "bold" }, --   A floating point constant: 2.3e10
 
-    -- Identifier     { }, -- (*) Any variable name
-    -- Function       { }, --   Function name (also: methods for classes)
+    Identifier     { fg = palette.orange }, -- (*) Any variable name
+    Function       { fg = palette.orange }, --   Function name (also: methods for classes)
 
-    -- Statement      { }, -- (*) Any statement
-    -- Conditional    { }, --   if, then, else, endif, switch, etc.
-    -- Repeat         { }, --   for, do, while, etc.
-    -- Label          { }, --   case, default, etc.
-    -- Operator       { }, --   "sizeof", "+", "*", etc.
-    -- Keyword        { }, --   any other keyword
-    -- Exception      { }, --   try, catch, throw
+    Statement      { fg = palette.taffy, gui = "bold" }, -- (*) Any statement
+    Conditional    { fg = palette.taffy, gui = "bold" }, --   if, then, else, endif, switch, etc.
+    Repeat         { fg = palette.taffy, gui = "bold" }, --   for, do, while, etc.
+    Label          { fg = palette.taffy, gui = "bold" }, --   case, default, etc.
+    Operator       { fg = palette.taffy, gui = "bold" }, --   "sizeof", "+", "*", etc.
+    Keyword        { fg = palette.taffy, gui = "bold" }, --   any other keyword
+    Exception      { fg = palette.lime, gui = "bold"}, --   try, catch, throw
 
-    -- PreProc        { }, -- (*) Generic Preprocessor
+    PreProc        { fg = palette.lime }, -- (*) Generic Preprocessor
     -- Include        { }, --   Preprocessor #include
-    -- Define         { }, --   Preprocessor #define
-    -- Macro          { }, --   Same as Define
-    -- PreCondit      { }, --   Preprocessor #if, #else, #endif, etc.
+    Define         { fg = palette.lime }, --   Preprocessor #define
+    Macro          { fg = palette.lime }, --   Same as Define
+    PreCondit      { fg = palette.lime, gui = "bold" }, --   Preprocessor #if, #else, #endif, etc.
 
-    -- Type           { }, -- (*) int, long, char, etc.
-    -- StorageClass   { }, --   static, register, volatile, etc.
-    -- Structure      { }, --   struct, union, enum, etc.
-    -- Typedef        { }, --   A typedef
+    Type           { fg = palette.dress }, -- (*) int, long, char, etc.
+    StorageClass   { fg = palette.taffy }, --   static, register, volatile, etc.
+    Structure      { fg = palette.taffy }, --   struct, union, enum, etc.
+    Typedef        { fg = palette.taffy, gui = "bold" }, --   A typedef
 
-    -- Special        { }, -- (*) Any special symbol
-    -- SpecialChar    { }, --   Special character in a constant
+    Special        { fg = palette.plain }, -- (*) Any special symbol
+    SpecialChar    { fg = palette.dress, gui = "bold"}, --   Special character in a constant
     -- Tag            { }, --   You can use CTRL-] on this
     -- Delimiter      { }, --   Character that needs attention
-    -- SpecialComment { }, --   Special things inside a comment (e.g. '\n')
+    SpecialComment { fg = palette.snow, gui = "bold"}, --   Special things inside a comment (e.g. '\n')
     -- Debug          { }, --   Debugging statements
 
-    -- Underlined     { gui = "underline" }, -- Text that stands out, HTML links
-    -- Ignore         { }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
-    -- Error          { }, -- Any erroneous construct
-    -- Todo           { }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+    Underlined     { gui = "underline" }, -- Text that stands out, HTML links
+    Ignore         { fg = palette.gravel.standard }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
+    Error          { fg = palette.snow, bg = palette.taffy, gui = "bold"}, -- Any erroneous construct
+    Todo           { fg = palette.snow, gui = "bold"}, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
     -- These groups are for the native LSP client and diagnostic system. Some
     -- other LSP clients may use these groups, or use their own. Consult your
